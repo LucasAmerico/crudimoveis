@@ -1,0 +1,20 @@
+﻿@page "/imovel/create"
+@inject IImovelService imovelService
+@inject NavigationManager navigation
+
+<h2>Novo Imovel</h2> 
+
+<ImovelForm Imovel="@imovel" OnValidationSubmit="CriarAluno"
+    ButtonTextCancelar="Cancelar"
+    ButtonTextSubmit="Salvar">
+</ImovelForm>
+
+@code {
+    private Imovel imovel = new Imovel();
+
+    async Task CriarAluno()
+    {
+        await imovelService.CreateImovel(imovel);
+        navigation.NavigateTo("imoveis");
+    }
+}

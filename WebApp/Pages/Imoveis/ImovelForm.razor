@@ -1,0 +1,147 @@
+﻿
+<EditForm Model="@Imovel" OnValidSubmit="@OnValidationSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group row">
+        <label form="tipo">Tipo do Imóvel</label>
+        <div class="col-sm-4">
+            
+            <InputSelect @bind-Value="Imovel.TipoDoImovel" class="form-control">
+                @foreach (var tipo in Enum.GetValues(typeof(TiposDeImovel)))
+                    {
+                        <option value="@tipo">@tipo</option>
+                    }
+	
+            </InputSelect>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label form="valorDeVenda">Valor de Venda</label>
+        <div class="col-sm-4">
+            <InputNumber @bind-Value="Imovel.ValorDeVenda" @bind-Value:format="F2" class="form-control" />
+            <ValidationMessage For="@(()=> Imovel.ValorDeVenda)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label form="varloDeLocacao">Valor de Locação</label>
+        <div class="col-sm-4">
+            <InputNumber @bind-Value="Imovel.ValorDeLocacao" @bind-Value:format="F2" class="form-control" />
+            <ValidationMessage For="@(()=> Imovel.ValorDeLocacao)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label form="endereco">Endereço</label>
+        <div class="col-sm-4">
+            <InputText @bind-Value="Imovel.Endereco" class="form-control" />
+            <ValidationMessage For="@(()=> Imovel.Endereco)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label form="numero">Numero</label>
+        <div class="col-sm-4">
+            <InputNumber @bind-Value="Imovel.Numero" class="form-control" />
+            <ValidationMessage For="@(()=> Imovel.Numero)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label form="complemento">Complemento</label>
+        <div class="col-sm-4">
+            <InputText @bind-Value="Imovel.Complemento" class="form-control" />
+            <ValidationMessage For="@(()=> Imovel.Complemento)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label form="bairro">Bairro</label>
+        <div class="col-sm-4">
+            <InputText @bind-Value="Imovel.Bairro" class="form-control" />
+            <ValidationMessage For="@(()=> Imovel.Bairro)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label form="cidade">Cidade</label>
+        <div class="col-sm-4">
+            <InputText @bind-Value="Imovel.Cidade" class="form-control" />
+            <ValidationMessage For="@(()=> Imovel.Cidade)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label form="estado">Estado</label>
+        <div class="col-sm-4">
+            <InputText @bind-Value="Imovel.Estado" class="form-control" />
+            <ValidationMessage For="@(()=> Imovel.Estado)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label form="cep">Cep</label>
+        <div class="col-sm-4">
+            <InputText @bind-Value="Imovel.Cep" class="form-control" />
+            <ValidationMessage For="@(()=> Imovel.Cep)" />
+        </div>
+    </div>
+
+
+    <br />
+
+    <button type="submit" class="btn btn-success">
+        @ButtonTextSubmit
+    </button>
+
+    <button class="btn btn-danger"
+            @onclick="@(() => navigation.NavigateTo("imoveis"))">
+        @ButtonTextCancelar
+    </button>
+
+</EditForm>
+
+@code {
+
+    [Inject]
+    private NavigationManager navigation { get; set; }
+
+    [Inject]
+    public IImovelService imovelService { get; set; }
+
+    [Parameter]
+    public Imovel Imovel { get; set; }
+
+    [Parameter]
+    public string ButtonTextSubmit { get; set; } = "Salvar";
+
+    [Parameter]
+    public string ButtonTextCancelar { get; set; } = "Cancelar";
+
+    [Parameter]
+    public EventCallback OnValidationSubmit { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        if (Imovel.Id == 0)
+        {
+            Imovel.Id = await GetNewId();
+        }
+    }
+
+    private async Task<int> GetNewId()
+    {
+        int[] ids = await GetIds();
+        int higherNumber = ids[0];
+
+        foreach (var id in ids)
+        {
+            if (id > higherNumber)
+            {
+                higherNumber = id;
+            }
+        }
+        return higherNumber + 1;
+    }
+
+    private async Task<int[]> GetIds()
+    {
+        var imoveis = await imovelService.GetImoveis();
+        int[] ids = imoveis.Select((imovel) => imovel.Id).ToArray();
+        return ids;
+    }
+
+}

@@ -1,0 +1,42 @@
+﻿<EditForm Model="@Imovel">
+    
+    <dl>
+        <dd><b>Id:</b> @Imovel.Id</dd>
+        <dd><b>Tipo do Imóvel:</b> @Imovel.TipoDoImovel</dd>
+        <dd><b>Valor de Venda:</b> @Imovel.ValorDeVenda</dd>
+        <dd><b>Valor de Locação:</b> @Imovel.ValorDeVenda</dd>
+        <dd><b>Endereço:</b> @Imovel.Endereco</dd>
+        <dd><b>Número:</b> @Imovel.Numero</dd>
+        <dd><b>Complemento:</b> @Imovel.Complemento</dd>
+        <dd><b>Bairro:</b> @Imovel.Bairro</dd>
+        <dd><b>Cidade:</b> @Imovel.Cidade</dd>
+        <dd><b>Estado:</b> @Imovel.Estado</dd>
+        <dd><b>CEP:</b> @Imovel.Cep</dd>
+
+    </dl>
+
+    <br />
+
+    <button class="btn btn-success"
+        @onclick="@(() => navigation.NavigateTo("imoveis"))">
+        @ButtonTextSubmit
+    </button>
+
+</EditForm>
+
+    @code {
+        [Inject]
+        private NavigationManager navigation { get; set; }
+
+        [Inject]
+        public IImovelService imovelService { get; set; }
+
+        [Parameter]
+        public Imovel Imovel { get; set; }
+
+        [Parameter]
+        public string ButtonTextSubmit { get; set; } = "Retornar";
+        
+        public EventCallback OnValidationSubmit { get; set; }
+
+    }

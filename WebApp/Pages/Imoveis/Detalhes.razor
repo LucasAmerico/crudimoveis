@@ -1,0 +1,26 @@
+﻿@page "/imovel/details/{ImovelId}"
+@inject IImovelService imovelService
+@inject NavigationManager navigation
+
+<h2>Imovel @ImovelId</h2>
+
+<DetalhesPage Imovel="@imovel"
+              ButtonTextSubmit="Retornar">
+</DetalhesPage>
+
+@code {
+    private Imovel imovel = new Imovel();
+
+    [Parameter] public string ImovelId { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        imovel = await imovelService.GetImovel(int.Parse(ImovelId));
+
+    }
+
+    async Task GetImovel(int id)
+    {
+        await imovelService.GetImovel(id);
+    }
+
+}

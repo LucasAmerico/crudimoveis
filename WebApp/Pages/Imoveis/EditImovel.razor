@@ -1,0 +1,34 @@
+﻿@page "/imovel/edit/{ImovelId}"
+@inject IImovelService imovelService
+@inject NavigationManager navigation
+
+<h2>Imovel @ImovelId</h2>
+<ImovelForm Imovel="@imovel" OnValidationSubmit="UpdateImovel"
+            ButtonTextCancelar="Cancelar"
+            ButtonTextSubmit="Atualizar">
+</ImovelForm>
+
+
+@code {
+    private Imovel imovel = new Imovel();
+
+    [Parameter] public string ImovelId { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        imovel = await imovelService.GetImovel(int.Parse(ImovelId));
+
+    }
+
+    async Task GetImovel(int id)
+    {
+        await imovelService.GetImovel(id);
+       
+    }
+
+    async Task UpdateImovel()
+    {
+        await imovelService.UpdateImovel(imovel);
+        navigation.NavigateTo("imoveis");
+    }
+
+}

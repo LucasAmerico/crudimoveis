@@ -1,0 +1,93 @@
+﻿@page "/imoveis"
+@inject IImovelService imovelService
+
+<h3>Lista de Imoveis</h3>
+
+<div>
+    <a href='imovel/create' class="btn btn-primary"> Criar novo imóvel</a>
+</div>
+
+<br />
+
+@if (Imoveis == null)
+{
+    <h3> Não existe imoveis</h3>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tipo</th>
+                <th>Valor de Venda</th>
+                <th>Valor de Locação</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Imovel imovel in Imoveis)
+            {
+                <tr>
+                    <td>@imovel.Id</td>
+                    <td>@imovel.TipoDoImovel</td>
+                    <td>@imovel.ValorDeVenda</td>
+                    <td>@imovel.ValorDeLocacao</td>
+                    <td>@imovel.Cidade</td>
+                    <td>@imovel.Estado</td>
+                    <td>
+                        <a href='imovel/details/@imovel.Id' class="btn btn-success"> Detalhes</a>
+                        <a href='imovel/edit/@imovel.Id' class="btn btn-secondary"> Editar</a>
+                        <a class="btn btn-danger" @onclick="@(()=> DeleteImovel(imovel.Id))" style="color : white"> Deletar</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+<Confirma @ref="confirma" onCancela="CancelaDelete" onConfirma="ConfirmaDelete">
+    <div>Deseja realmente excluir esse imóvel?</div>
+</Confirma>
+
+
+@code {
+    public IEnumerable<Imovel> Imoveis { get; set; }
+    public Imovel Imovel { get; set; }
+
+
+    
+    Confirma confirma;
+    int codigoImovel;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        await GetImoveis();
+    }
+
+    protected async Task GetImoveis()
+    {
+        Imoveis = await imovelService.GetImoveis();
+    }
+
+    void DeleteImovel(int imovelId)
+    {
+        confirma.Exibir();
+        codigoImovel = imovelId;
+    }
+    
+    void CancelaDelete()
+    {
+        confirma.Ocultar();
+    }
+    async Task ConfirmaDelete()
+    {
+        await imovelService.DeleteImovel(codigoImovel);
+        confirma.Ocultar();
+        await GetImoveis();
+    }
+
+}
