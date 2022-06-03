@@ -17,7 +17,7 @@ CRUD para cadastro de imoveis com Asp.net c# Blazor
 <br /><code>dotnet add package System.ComponentModel.Annotations --version 5.0.0</code>
 
 - Para ter acesso ao projeto é necessário clonar ele pelo github.
-<br /><code>clone xxxxx</code>
+<br /><code>https://github.com/LucasAmerico/crudimoveis.git</code>
 
 - A URIBase da API criada no site https://mockapi.io/
 <br /><a>https://6297992c14e756fe3b33377a.mockapi.io/testnetimoveis/api/v1/</a>
