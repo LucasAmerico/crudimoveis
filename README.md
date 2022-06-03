@@ -10,6 +10,9 @@ CRUD para cadastro de imoveis com Asp.net c# Blazor
 <br />**Visual Studio 2019 ou superior e baixar a configuração "ASP.NET e desenvolvimento Web"**
 <br /><a>https://visualstudio.microsoft.com/pt-br/vs/older-downloads/</a>
 
+<br />**1 - Para executar, com a Solução aberta no Visual Studio, clique com o botão direito do mouse encima do projeto WebApp e marque a opção set as Startup Project**
+<br />**2 - Após isso clique em IIS Express no topo do Visual Studio**
+
 - Os seguintes pacotes adicionais foram instalados:
 <br />**System.Net.Http.Json 6.0.0**
 <br /><code>dotnet add package System.Net.Http.Json --version 6.0.0</code>
