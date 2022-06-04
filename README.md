@@ -5,7 +5,7 @@ CRUD para cadastro de imoveis com Asp.net c# Blazor
 <br />As ações possíveis neste projeto são de: Criar, Editar, Deletar, Listar e Mostrar os imóveis.
 
 - Para executar o projeto, será necessário instalar os seguintes programas:
-<br />**Net5**
+<br />**.Net5**
 <br /> <a>https://dotnet.microsoft.com/en-us/download/dotnet/5.0</a>
 <br />**Visual Studio 2019 ou superior e baixar a configuração "ASP.NET e desenvolvimento Web"**
 <br /><a>https://visualstudio.microsoft.com/pt-br/vs/older-downloads/</a>
