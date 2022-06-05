@@ -4,7 +4,7 @@
 
 <h2>Novo Imovel</h2> 
 
-<ImovelForm Imovel="@imovel" OnValidationSubmit="CriarAluno"
+<ImovelForm Imovel="@imovel" OnValidationSubmit="Create"
     ButtonTextCancelar="Cancelar"
     ButtonTextSubmit="Salvar">
 </ImovelForm>
@@ -12,7 +12,7 @@
 @code {
     private Imovel imovel = new Imovel();
 
-    async Task CriarAluno()
+    async Task Create()
     {
         await imovelService.CreateImovel(imovel);
         navigation.NavigateTo("imoveis");
